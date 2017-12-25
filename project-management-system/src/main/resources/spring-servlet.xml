@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
+  <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="prefix" value="/" />
+    <property name="suffix" value=".jsp" />
+  </bean>
 
+  <!-- annotation默认的方法映射适配器 -->
+  <bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 
-	<mvc:resources mapping="/css/**" location="/css/" />
-	<mvc:resources mapping="/bootstrap-3.3.7/**" location="bootstrap-3.3.7/" />
-	<mvc:resources mapping="/js/**" location="/js/" />
-	<mvc:resources mapping="/img/**" location="/img/" />
-	<mvc:resources mapping="/fonts/**" location="/fonts/" />
-	<mvc:resources mapping="/hAdmin/**" location="/hAdmin/" />
-	<mvc:resources mapping="/*" location="/" />
-
-	<!-- 另外一种方式 -->
-	<mvc:resources location="/" mapping="/**/*.html"/>
-	<!--<mvc:resources location="/" mapping="/**/*.js"/>-->
-	<!--<mvc:resources location="/" mapping="/**/*.css"/>-->
-	<!--<mvc:resources location="/" mapping="/**/*.png"/>-->
-	<!--<mvc:resources location="/" mapping="/**/*.gif"/>-->
-	<!-- <mvc:default-servlet-handler /> -->
-	<!-- 默认视图为 /WEB-INF/views目录下的.jsp文件 -->
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/views/" />
-		<property name="suffix" value=".jsp" />
-	</bean>
+  <bean id="handlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+    <property name="messageConverters">
+      <list>
+        <!-- 启动JSON格式的配置 -->
+        <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+          <!-- 解决 HttpMediaTypeNotAcceptableException: Could not find acceptable representation -->
+          <property name="supportedMediaTypes">
+            <list>
+              <value>application/json;charset=UTF-8</value>
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
 </beans>
