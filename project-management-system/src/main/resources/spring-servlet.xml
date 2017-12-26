@@ -6,27 +6,26 @@
 	http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
+
+
   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="prefix" value="/" />
     <property name="suffix" value=".jsp" />
   </bean>
 
-  <!-- annotation默认的方法映射适配器 -->
-  <bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
-
-  <bean id="handlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-    <property name="messageConverters">
-      <list>
-        <!-- 启动JSON格式的配置 -->
-        <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-          <!-- 解决 HttpMediaTypeNotAcceptableException: Could not find acceptable representation -->
-          <property name="supportedMediaTypes">
-            <list>
-              <value>application/json;charset=UTF-8</value>
-            </list>
-          </property>
-        </bean>
-      </list>
-    </property>
-  </bean>
+  <!-- 用于将对象转换为 JSON -->
+  <mvc:annotation-driven>
+    <mvc:message-converters>
+      <bean class="org.springframework.http.converter.ResourceHttpMessageConverter">
+      </bean>
+      <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+          <list>
+            <value>text/html;charset=UTF-8</value>
+            <value>application/json;charset=UTF-8</value>
+          </list>
+        </property>
+      </bean>
+    </mvc:message-converters>
+  </mvc:annotation-driven>
 </beans>
