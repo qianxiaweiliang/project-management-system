@@ -13,11 +13,24 @@
   http://www.springframework.org/schema/task
   http://www.springframework.org/schema/task/spring-task.xsd">
 
-
   <!-- 默认的注解映射的支持 -->
-  <mvc:annotation-driven />
+  <mvc:annotation-driven>
+    <!-- 用于将对象转换为 JSON -->
+    <mvc:message-converters>
+      <bean class="org.springframework.http.converter.ResourceHttpMessageConverter">
+      </bean>
+      <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+          <list>
+            <value>text/html;charset=UTF-8</value>
+            <value>application/json;charset=UTF-8</value>
+          </list>
+        </property>
+      </bean>
+    </mvc:message-converters>
+  </mvc:annotation-driven>
   <!-- 自动扫描注解 -->
-  <context:component-scan base-package="com.test" />
+  <context:component-scan base-package="com.test.*" />
 
   <!-- 当上面要访问的静态资源不包括在上面的配置中时，则根据此配置来访问 -->
   <mvc:default-servlet-handler />
@@ -49,7 +62,7 @@
     <property name="dataSource" ref="dataSource" />
     <property name="configLocation" value="classpath:mybatisConfig.xml"></property>
     <!-- 自动扫描mapping.xml文件 -->
-    <property name="mapperLocations" value="classpath:com/test/*/dao/mapper/*.xml"></property>
+    <property name="mapperLocations" value="classpath:com/test/*/dao/mapper/*Mapper.xml"></property>
   </bean>
 
   <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
