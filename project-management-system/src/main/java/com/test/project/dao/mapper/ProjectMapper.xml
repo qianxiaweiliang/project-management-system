@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.project.dao.ProjectDao">
+
+  <sql id="key">
+    <!-- 去掉最后一个, -->
+    <trim suffixOverrides=",">
+      <if test="project_source!=null">
+        project_source,
+      </if>
+      <if test="project_type!=null">
+        project_type,
+      </if>
+      <if test="project_name!=null">
+        project_name,
+      </if>
+      <if test="project_memo!=null">
+        project_memo,
+      </if>
+      <if test="level!=null">
+        level,
+      </if>
+      <if test="start_time!=null">
+        start_time,
+      </if>
+      <if test="end_time!=null">
+        end_time,
+      </if>
+      <if test="project_manager!=null">
+        project_manager,
+      </if>
+      <if test="project_employees!=null">
+        project_employees,
+      </if>
+      <if test="total_working_time!=null">
+        total_working_time,
+      </if>
+    </trim>
+  </sql>
+
+  <sql id="value">
+    <!-- 去掉最后一个, -->
+    <trim suffixOverrides=",">
+      <if test="project_source!=null">
+        #{project_source},
+      </if>
+      <if test="project_type!=null">
+        #{project_type},
+      </if>
+      <if test="project_name!=null">
+        #{project_name},
+      </if>
+      <if test="project_memo!=null">
+        #{project_memo},
+      </if>
+      <if test="level!=null">
+        #{level},
+      </if>
+      <if test="start_time!=null">
+        #{start_time},
+      </if>
+      <if test="end_time!=null">
+        #{end_time},
+      </if>
+      <if test="project_manager!=null">
+        #{project_manager},
+      </if>
+      <if test="project_employees!=null">
+        #{project_employees},
+      </if>
+      <if test="total_working_time!=null">
+        #{total_working_time},
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 增加 -->
+  <insert id="save" parameterType="com.test.project.entity.ProjectEntity">
+    INSERT INTO project(
+    <include refid="key" />
+    ) VALUES(
+    <include refid="value" />
+    )
+  </insert>
+
+  <!-- 查询单条记录 -->
+  <select id="selectProjectById" parameterType="java.lang.Long" resultType="com.test.project.entity.ProjectEntity">
+    SELECT * FROM project a WHERE a.id = #{id}
+  </select>
+
+  <!-- 查询列表 -->
+  <select id="selectProject" parameterType="com.test.project.entity.ProjectEntity" resultMap="com.test.project.entity.ProjectEntity">
+    SELECT * FROM config a
+    <where>
+      <if test="project_source!=null">
+        a.project_source=#{project_source},
+      </if>
+      <if test="project_type!=null">
+       AND a.project_type=#{project_type},
+      </if>
+      <if test="project_name!=null">
+       AND  a.project_name=#{project_name},
+      </if>
+      <if test="level!=null">
+        AND a.level=#{level},
+      </if>
+      <if test="start_time!=null">
+        AND a.start_time>=#{start_time},
+      </if>
+      <if test="end_time!=null">
+        AND #{end_time}>=a.end_time,
+      </if>
+      <if test="project_manager!=null">
+        AND a.project_manager=#{project_manager},
+      </if>
+      <if test="project_employees!=null">
+        AND a.project_employees in (#{project_employees}),
+      </if>
+      <if test="creator_id!=null">
+        AND a.total_working_time=#{total_working_time},
+      </if>
+    </where>
+  </select>
+
+  <!-- 修改（包括禁用启用） -->
+  <update id="updateProject" parameterMap="com.test.project.entity.ProjectEntity">
+    UPDATE config a
+    <trim prefix="set" suffixOverrides=",">
+      <if test="project_source!=null">
+        a.project_source=#{project_source},
+      </if>
+      <if test="project_type!=null">
+        a.project_type=#{project_type},
+      </if>
+      <if test="project_name!=null">
+        a.project_name=#{project_name},
+      </if>
+      <if test="project_memo!=null">
+        a.project_memo=#{project_memo},
+      </if>
+      <if test="level!=null">
+        a.level=#{level},
+      </if>
+      <if test="start_time!=null">
+        a.start_time=#{start_time},
+      </if>
+      <if test="end_time!=null">
+        a.end_time=#{end_time},
+      </if>
+      <if test="project_manager!=null">
+        a.project_manager=#{project_manager},
+      </if>
+      <if test="project_employees!=null">
+        a.project_employees=#{project_employees},
+      </if>
+      <if test="total_working_time!=null">
+        a.total_working_time=#{total_working_time},
+      </if>
+    </trim>
+    WHERE a.id=#{id}
+  </update>
+
+  <!-- 删除记录 -->
+  <delete id="deleteProject" parameterType="java.lang.Long">
+    DELETE FROM project t WHERE t.id = #{id}
+  </delete>
+</mapper>

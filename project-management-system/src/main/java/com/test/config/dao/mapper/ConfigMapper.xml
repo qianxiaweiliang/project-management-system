@@ -3,11 +3,55 @@
 
 <mapper namespace="com.test.config.dao.ConfigDao">
 
-  <insert id="addTestUser">
-    INSERT INTO config (kind,status) VALUES(#{kind},#{status})
+  <!-- <insert id="addTestUser"> INSERT INTO config (kind,status) VALUES(#{kind},#{status}) </insert> -->
+
+  <!-- 增加 -->
+  <insert id="addConfig" parameterType="com.test.config.entity.ConfigEntity">
+    INSERT INTO config a (a.kind,a.description,a.status,a.creator_id) VALUES(#{kind},#{description},#{status},#{creator_id})
   </insert>
+
+  <!-- 查询单条记录 -->
+  <select id="selectConfigById" parameterType="java.lang.Long" resultType="com.test.config.entity.ConfigEntity">
+    SELECT * FROM config a WHERE a.id = #{id}
+  </select>
+
+  <!-- 查询列表（包括增加时查重） -->
+  <select id="selectConfig" parameterType="com.test.config.entity.ConfigEntity" resultMap="com.test.config.entity.ConfigEntity">
+    SELECT * FROM config a
+    <where>
+      <if test="kind != null ">
+        a.kind = ${kind}
+      </if>
+      <if test="description != null and description != ''">
+        <![CDATA[ AND a.description like '%${description}%' ]]>
+      </if>
+      <if test="status != null">
+        AND a.status = ${status}
+      </if>
+    </where>
+  </select>
   
-  <insert id="addTestUser1" parameterType="com.test.config.entity.ConfigEntity">
-    INSERT INTO config (kind,description) VALUES(#{kind},#{description})
-  </insert>
+  <!-- 查询防止重复 -->
+  <select id="selectConfigByDescription" parameterType="com.test.config.entity.ConfigEntity" resultMap="com.test.config.entity.ConfigEntity">
+    SELECT * FROM config a
+    <where>
+      <if test="kind != null ">
+        a.kind = #{kind}
+      </if>
+      <if test="description != null and description != ''">
+        <![CDATA[ AND a.description = #{description} ]]>
+      </if>
+    </where>
+  </select>
+
+  <!-- 修改（包括禁用启用） -->
+  <update id="updateConfig" parameterMap="com.test.config.entity.ConfigEntity">
+    UPDATE config a
+    <trim prefix="set" suffixOverrides=",">
+      <if test="kind!=null">a.kind=#{kind},</if>
+      <if test="description!=null">a.description=#{description},</if>
+      <if test="status!=null">a.status=#{status},</if>
+    </trim>
+    WHERE a.id=#{id}
+  </update>
 </mapper>
