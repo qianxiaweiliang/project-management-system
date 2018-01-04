@@ -1,0 +1,6 @@
+<%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/jquery-easyui/themes/metro/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/jquery-easyui/themes/icon.css">
+<script type="text/javascript" src="<%=request.getContextPath() %>/jquery-easyui/jquery.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
