@@ -3,7 +3,7 @@
 <html>
 <head>
 <%@include file='/common/header.jsp'%>
-<title>ESC | 后台主页</title>
+<title>项目管理系统</title>
 
 <script type="text/javascript">
 	//给a标签注册一个事件
