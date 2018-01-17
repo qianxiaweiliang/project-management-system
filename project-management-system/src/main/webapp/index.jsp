@@ -6,7 +6,7 @@
   <%@ include file="/common/header.jsp"%>
 </head>
 <body>
-<form action="/employee/main" method="post">
+<form action="/employee/main" method="get">
 
 	用户名：<input type="text" name="username"><br>
 	密码：<input type="password" name="password"><br>

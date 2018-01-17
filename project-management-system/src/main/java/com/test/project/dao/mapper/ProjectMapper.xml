@@ -90,7 +90,7 @@
   </select>
 
   <!-- 查询列表 -->
-  <select id="selectProject" parameterType="com.test.project.entity.ProjectEntity" resultMap="com.test.project.entity.ProjectEntity">
+  <select id="selectProject" parameterType="com.test.project.entity.ProjectEntity" resultType="com.test.project.entity.ProjectEntity">
     SELECT * FROM config a
     <where>
       <if test="project_source!=null">
@@ -124,7 +124,7 @@
   </select>
 
   <!-- 修改（包括禁用启用） -->
-  <update id="updateProject" parameterMap="com.test.project.entity.ProjectEntity">
+  <update id="updateProject" parameterType="com.test.project.entity.ProjectEntity">
     UPDATE config a
     <trim prefix="set" suffixOverrides=",">
       <if test="project_source!=null">
