@@ -2,6 +2,7 @@ package com.test.user.biz;
 
 import java.util.List;
 
+import com.test.commom.exception.BizException;
 import com.test.user.entity.EmployeeEntity;
 
 public interface IEmployeeBiz {
@@ -16,8 +17,9 @@ public interface IEmployeeBiz {
      * @exception
      * @createTime：2018年1月11日
      * @author: wangzl
+     * @throws BizException
      */
-    public EmployeeEntity login(String username, String password);
+    public EmployeeEntity login(String username, String password) throws BizException;
 
     /**
      * 描述：根据id获取信息

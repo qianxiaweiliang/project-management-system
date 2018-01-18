@@ -1,5 +1,8 @@
 package com.test.user.dao;
 
-public class EmployeeDao {
+import com.test.user.entity.EmployeeEntity;
 
+public interface EmployeeDao {
+
+    public EmployeeEntity selectEmployeeByUsername(String username);
 }
