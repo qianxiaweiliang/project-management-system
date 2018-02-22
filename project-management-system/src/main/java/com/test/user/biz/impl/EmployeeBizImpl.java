@@ -29,6 +29,10 @@ public class EmployeeBizImpl implements IEmployeeBiz {
 
         EmployeeEntity employeeEntity = employeeDao.selectEmployeeByUsername(username);
 
+        if (employeeEntity == null) {
+            throw new BizException("此用户不存在！");
+        }
+
         if (!password.equals(employeeEntity.getPassword())) {
             throw new BizException("密码不正确！");
         }

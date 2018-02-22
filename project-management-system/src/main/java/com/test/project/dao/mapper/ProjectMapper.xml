@@ -93,31 +93,31 @@
   <select id="selectProject" parameterType="com.test.project.entity.ProjectEntity" resultType="com.test.project.entity.ProjectEntity">
     SELECT * FROM config a
     <where>
-      <if test="project_source!=null">
+      <if test="projectSource!=null">
         a.project_source=#{project_source},
       </if>
-      <if test="project_type!=null">
+      <if test="projectType!=null">
        AND a.project_type=#{project_type},
       </if>
-      <if test="project_name!=null">
+      <if test="projectName!=null">
        AND  a.project_name=#{project_name},
       </if>
       <if test="level!=null">
         AND a.level=#{level},
       </if>
-      <if test="start_time!=null">
+      <if test="startTime!=null">
         AND a.start_time>=#{start_time},
       </if>
-      <if test="end_time!=null">
+      <if test="endTime!=null">
         AND #{end_time}>=a.end_time,
       </if>
-      <if test="project_manager!=null">
+      <if test="projectManager!=null">
         AND a.project_manager=#{project_manager},
       </if>
-      <if test="project_employees!=null">
+      <if test="projectEmployees!=null">
         AND a.project_employees in (#{project_employees}),
       </if>
-      <if test="creator_id!=null">
+      <if test="creatorId!=null">
         AND a.total_working_time=#{total_working_time},
       </if>
     </where>

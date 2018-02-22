@@ -1,6 +1,6 @@
 package com.test.commom.bean;
 
-public class SelectListBean {
+public class CommonBean {
 
     private Integer key;
 
@@ -21,6 +21,5 @@ public class SelectListBean {
     public void setValue(String value) {
         this.value = value;
     }
-
 
 }
